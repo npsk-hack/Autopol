@@ -1,4 +1,3 @@
-
 project.ext.ASSET_DIR = projectDir.toString() + '/assets'
 assert file(project.ext.ASSET_DIR + "/tiny_yolo.pb").exists()
 assert file(project.ext.ASSET_DIR + "/tiny_yolo_labels.txt").exists()
