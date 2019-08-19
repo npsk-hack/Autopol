@@ -90,7 +90,7 @@ public class ObstacleDetectorActivity extends CameraActivity implements OnImageA
                     title += ", ";
                     title += results.get(ix).getTitle();
                 }
-                Toast.makeText(ObstacleDetectorActivity.this, title, Toast.LENGTH_LONG).show();
+                //Toast.makeText(ObstacleDetectorActivity.this, title, Toast.LENGTH_LONG).show();
             }
             requestRender();
             computing = false;
