@@ -44,9 +44,10 @@ public class ObstacleDetectorActivity extends CameraActivity implements OnImageA
         overlayView = (OverlayView) findViewById(R.id.overlay);
 
         final int screenOrientation = getWindowManager().getDefaultDisplay().getRotation();
-        Log.i(LOGGING_TAG, String.format("Sensor orientation: %d, Screen orientation: %d",
-                rotation, screenOrientation));
+        //Sensor orientation: 90, Screen orientation: 0
         sensorOrientation = rotation + screenOrientation;
+        Log.i(LOGGING_TAG, String.format("Camera rotation: %d, Screen orientation: %d, Sensor orientation: %d",
+                rotation, screenOrientation, sensorOrientation));
 
         previewWidth = previewSize.getWidth();
         previewHeight = previewSize.getHeight();
@@ -84,14 +85,16 @@ public class ObstacleDetectorActivity extends CameraActivity implements OnImageA
         runInBackground(() -> {
             final List<DetectionResult> results = yoloObjectDetector.detectObjects(imageBitmapForModel);
             overlayView.setResults(results);
+            /*
             if(results.size() > 0) {
                 String title = results.get(0).getTitle();
                 for(int ix = 1 ; ix < results.size() - 1; ix++) {
                     title += ", ";
                     title += results.get(ix).getTitle();
                 }
-                //Toast.makeText(ObstacleDetectorActivity.this, title, Toast.LENGTH_LONG).show();
+                Toast.makeText(ObstacleDetectorActivity.this, title, Toast.LENGTH_LONG).show();
             }
+            */
             requestRender();
             computing = false;
         });

@@ -45,6 +45,15 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class CameraConnectionFragment extends Fragment {
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray(4);
+
+    static {
+        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_90, 0);
+        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_270, 180);
+    }
+
     private static final String LOGGING_TAG = "autopol";
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
 
@@ -341,6 +350,8 @@ public class CameraConnectionFragment extends Fragment {
             previewReader.setOnImageAvailableListener(imageListener, backgroundHandler);
             previewRequestBuilder.addTarget(previewReader.getSurface());
 
+            //fixDeviceCameraOrientation(previewRequestBuilder);
+
             // Here, we create a CameraCaptureSession for camera preview.
             cameraDevice.createCaptureSession(Arrays.asList(surface, previewReader.getSurface()),
                     getCaptureSessionStateCallback(), null);
@@ -368,6 +379,8 @@ public class CameraConnectionFragment extends Fragment {
                     // Flash is automatically enabled when necessary.
                     previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
                             CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+
+                    //fixDeviceCameraOrientation(previewRequestBuilder);
 
                     // Finally, we start displaying the camera preview.
                     previewRequest = previewRequestBuilder.build();
@@ -408,6 +421,14 @@ public class CameraConnectionFragment extends Fragment {
             matrix.postRotate(180, centerX, centerY);
         }
         textureView.setTransform(matrix);
+    }
+
+    private void fixDeviceCameraOrientation(CaptureRequest.Builder previewRequestBuilder) {
+        final int deviceRotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+        int jpegOrientation =
+                (ORIENTATIONS.get(deviceRotation) + sensorOrientation + 270) % 360;
+        previewRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation);
+
     }
 
     static class CompareSizesByArea implements Comparator<Size> {
