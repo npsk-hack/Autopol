@@ -60,6 +60,7 @@ public class OverlayView extends View {
                 paint.setColor(Color.GREEN);
                 canvas.drawRect(box, paint);
                 float ratioBoxCanvas = box.height()/this.getHeight();
+                paint.setStrokeWidth(3.0f);
                 canvas.drawText(String.valueOf(ratioBoxCanvas), box.left, box.top - 20, paint);
                 Toast.makeText(getContext(), title, Toast.LENGTH_LONG).show();
                 if (ratioBoxCanvas > 0.45) {
