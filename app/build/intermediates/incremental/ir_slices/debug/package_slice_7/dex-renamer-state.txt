@@ -1,0 +1,4 @@
+#Tue Aug 20 10:05:10 IST 2019
+base.0=/Users/mrinaljain/Documents/android_apps/Autopol/app/build/intermediates/transforms/dexMerger/debug/7
+path.0=classes.dex
+renamed.0=classes.dex
