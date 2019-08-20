@@ -159,11 +159,6 @@ public class CameraConnectionFragment extends Fragment {
         return (bigEnough.size() > 0) ? Collections.min(bigEnough, new CompareSizesByArea(  )) : choices[0];
     }
 
-    /**
-     * Shows a {@link Toast} on the UI thread.
-     *
-     * @param text The message to show
-     */
     private void showToast(final String text) {
         final Activity activity = getActivity();
         if (activity != null) {
@@ -171,9 +166,6 @@ public class CameraConnectionFragment extends Fragment {
         }
     }
 
-    /**
-     * Sets up member variables related to camera.
-     */
     private void setUpCameraOutputs() {
         final CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -299,18 +291,12 @@ public class CameraConnectionFragment extends Fragment {
         }
     }
 
-    /**
-     * Starts a background thread and its {@link Handler}.
-     */
     private void startBackgroundThread() {
         backgroundThread = new HandlerThread("ImageListener");
         backgroundThread.start();
         backgroundHandler = new Handler(backgroundThread.getLooper());
     }
 
-    /**
-     * Stops the background thread and its {@link Handler}.
-     */
     private void stopBackgroundThread() {
         backgroundThread.quitSafely();
         try {
@@ -322,9 +308,6 @@ public class CameraConnectionFragment extends Fragment {
         }
     }
 
-    /**
-     * Creates a new {@link CameraCaptureSession} for camera preview.
-     */
     private void createCameraPreviewSession() {
         try {
             final SurfaceTexture texture = textureView.getSurfaceTexture();
